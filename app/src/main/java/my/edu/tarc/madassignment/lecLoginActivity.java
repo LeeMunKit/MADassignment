@@ -35,7 +35,7 @@ public class lecLoginActivity extends AppCompatActivity {
     Boolean isConnected;
 
     private EditText editTextUs, editTextPassword;
-    private Intent intent;
+    private Intent intent1;
     public static List<loginPage> custList;
 
     @Override
@@ -50,10 +50,12 @@ public class lecLoginActivity extends AppCompatActivity {
 
         editTextUs = (EditText) findViewById(R.id.emailtxt);
         editTextPassword = (EditText) findViewById(R.id.passwordtxt);
-        readCustomer();
+        read();
+
+
     }
 
-    public void readCustomer() {
+    public void read() {
         try {
             // Check availability of network connection.
             if (isConnected) {
@@ -91,7 +93,6 @@ public class lecLoginActivity extends AppCompatActivity {
                                 custList.add(cust);
                             }
 
-
                         } catch (Exception e) {
                             Toast.makeText(getApplicationContext(), "Error 1:" + e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
@@ -107,41 +108,39 @@ public class lecLoginActivity extends AppCompatActivity {
         queue.add(jsonObjectRequest);
 
     }
-    public void login(View v) {
+    public void login2(View v) {
         boolean valid = false;
-        String email, password;
-        email = String.valueOf(editTextUs.getText());
-        if (email.isEmpty()) {
-            editTextUs.setError("Please enter Email");
-            return;
-        }
 
-        password = String.valueOf(editTextPassword.getText());
-        if (password.isEmpty()) {
-            editTextPassword.setError("Please enter Password");
-            return;
-        }
-
-        //Check record in database
-        for (int i = 0; i < custList.size(); i++) {
-            if (custList.get(i).getEmail().equals(email) && custList.get(i).getPassword().equals(password)) {
-                valid = true;
+        if(isConnected) {
+            String email, password;
+            email = String.valueOf(editTextUs.getText());
+            password = String.valueOf(editTextPassword.getText());
+            //Check record in database
+            for (int i = 0; i < custList.size(); i++) {
+                if (custList.get(i).getEmail().equals(email) && custList.get(i).getPassword().equals(password)) {
+                    valid = true;
+                }
             }
-        }
 
-        if (valid) {
-            Toast.makeText(getApplicationContext(), "Log In Successfully", Toast.LENGTH_SHORT).show();
+            if (valid) {
+                Toast.makeText(getApplicationContext(), "Log In Successfully", Toast.LENGTH_SHORT).show();
 
-            intent = new Intent(this, teacherMenuActivity.class);
-            startActivity(intent);
-        } else {
-            Toast.makeText(getApplicationContext(), "Invalid Username or Password!", Toast.LENGTH_SHORT).show();
+                intent1 = new Intent(this, teacherMenuActivity.class);
+                startActivity(intent1);
+            } else {
+                Toast.makeText(getApplicationContext(), "Invalid Username or Password!", Toast.LENGTH_SHORT).show();
 
+            }
+        }else{
+            Toast toast = new Toast(getApplicationContext());
+            toast.makeText(getApplicationContext(), "No Network Connection.", Toast.LENGTH_SHORT).show();
         }
     }
+
+
     public void regbtn (View v){
-        Intent intent = new Intent(this, RegisterActivity.class);
-        startActivity(intent);
+        Intent intent1 = new Intent(this, RegisterActivity.class);
+        startActivity(intent1);
     }
 
     public void resetbtn (View v){

@@ -45,11 +45,13 @@ public class LoginActivity extends AppCompatActivity {
         connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         networkInfo = connMgr.getActiveNetworkInfo();
         isConnected = networkInfo != null && networkInfo.isConnectedOrConnecting();
-        custList = new ArrayList<loginPage>();
+        custList = new ArrayList<>();
 
         editTextUs = (EditText) findViewById(R.id.emailtxt1);
         editTextPassword = (EditText) findViewById(R.id.passwordtxt1);
         read();
+
+
     }
 
     public void read() {
@@ -107,34 +109,30 @@ public class LoginActivity extends AppCompatActivity {
     }
     public void login1(View v) {
         boolean valid = false;
-        String email, password;
 
-        email = String.valueOf(editTextUs.getText());
-        if (email.isEmpty()) {
-            editTextUs.setError("Please enter Email");
-            return;
-        }
-
-        password = String.valueOf(editTextPassword.getText());
-        if (password.isEmpty()) {
-            editTextPassword.setError("Please enter Password");
-            return;
-        }
-
-        //Check record in database
-        for (int i = 0; i < custList.size(); i++) {
-            if (custList.get(i).getEmail().equals(email) && custList.get(i).getPassword().equals(password)) {
-                valid = true;
+        if(isConnected) {
+            String email, password;
+            email = String.valueOf(editTextUs.getText());
+            password = String.valueOf(editTextPassword.getText());
+            //Check record in database
+            for (int i = 0; i < custList.size(); i++) {
+                if (custList.get(i).getEmail().equals(email) && custList.get(i).getPassword().equals(password)) {
+                    valid = true;
+                }
             }
-        }
 
-        if (valid) {
-           // Toast.makeText(getApplicationContext(), "Log In Successfully", Toast.LENGTH_SHORT).show();
-            intent = new Intent(this, studentMenuActivity.class);
-            startActivity(intent);
-        } else {
-            Toast.makeText(getApplicationContext(), "Invalid Username or Password!", Toast.LENGTH_SHORT).show();
+            if (valid) {
+                Toast.makeText(getApplicationContext(), "Log In Successfully", Toast.LENGTH_SHORT).show();
 
+                intent = new Intent(this, studentMenuActivity.class);
+                startActivity(intent);
+            } else {
+                Toast.makeText(getApplicationContext(), "Invalid Username or Password!", Toast.LENGTH_SHORT).show();
+
+            }
+        }else{
+            Toast toast = new Toast(getApplicationContext());
+            toast.makeText(getApplicationContext(), "No Network Connection.", Toast.LENGTH_SHORT).show();
         }
     }
 

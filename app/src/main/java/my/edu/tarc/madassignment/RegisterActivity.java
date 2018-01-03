@@ -76,9 +76,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         //Send data
         try {
-            StringRequest postRequest = new StringRequest(
-                    Request.Method.POST,
-                    url,
+            StringRequest postRequest = new StringRequest(Request.Method.POST, url,
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
