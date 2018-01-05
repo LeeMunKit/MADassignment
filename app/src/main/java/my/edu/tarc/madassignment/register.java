@@ -8,11 +8,14 @@ public class register {
     private String name;
     private String email;
     private String pass;
+    private String type;
 
-    public register(String name, String email, String pass){
+    public register(String name, String email, String pass, String type){
         this.email = email;
         this.pass = pass;
         this.name = name;
+        this.type = type;
+
     }
 
     public register(){
@@ -43,7 +46,15 @@ public class register {
         this.pass = pass;
     }
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
     public String toString(){
-        return "register{"+ "email='" + email +'\'' + ", pass='" + pass +'\''+ ", name ='" + name+ '\''+'}';
+        return "register{"+ "email='" + email +'\'' + ", pass='" + pass +'\''+ ", name ='" + name+ '\''+ ", type='" + type +'\''+'}';
     }
 }

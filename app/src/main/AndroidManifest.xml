@@ -40,8 +40,6 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".ResetPassActivity" />
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".lecLoginActivity" />
     </application>
 
 </manifest>

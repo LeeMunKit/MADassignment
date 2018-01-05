@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 import android.content.Context;
@@ -26,6 +27,7 @@ import java.util.Map;
 
 public class RegisterActivity extends AppCompatActivity {
     EditText editTextName, editTextEmail, editTextPass;
+    CheckBox tchcheckbox, stdcheckbox;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,11 +37,15 @@ public class RegisterActivity extends AppCompatActivity {
         editTextName = (EditText) findViewById(R.id.getnametxt);
         editTextEmail = (EditText) findViewById(R.id.getemailtxt);
         editTextPass = (EditText) findViewById(R.id.getpasstxt);
+
+        tchcheckbox = (CheckBox)findViewById(R.id.tchcheckBox);
+        stdcheckbox = (CheckBox)findViewById(R.id.stdcheckbox);
     }
 
     public void saveRecord(View v) {
         register reg = new register();
         String name, email, pass;
+        String type = new String();
 
         name = editTextName.getText().toString();
         if (name.isEmpty()) {
@@ -56,10 +62,17 @@ public class RegisterActivity extends AppCompatActivity {
             editTextPass.setError("Please enter Password");
             return;
         }
+        if(tchcheckbox.isChecked()){
+            type = tchcheckbox.getText().toString();
+        }else{
+            type = stdcheckbox.getText().toString();
+        }
+
 
         reg.setEmail(email);
         reg.setPass(pass);
         reg.setName(name);
+        reg.setType(type);
 
         try {
             makeServiceCall(this, getString(R.string.insert_register_url), reg);
@@ -108,6 +121,7 @@ public class RegisterActivity extends AppCompatActivity {
                     params.put("email", reg.getEmail());
                     params.put("password", reg.getPass());
                     params.put("Fullname", reg.getName());
+                    params.put("type", reg.getType());
                     return params;
                 }
 

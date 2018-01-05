@@ -9,14 +9,16 @@ import org.json.JSONArray;
 public class loginPage {
     private String email;
     private String Password;
+    private String type;
 
     public loginPage(){
 
     }
 
-    public loginPage(String email, String Password) {
+    public loginPage(String email, String Password, String type) {
         this.email = email;
         this.Password = Password;
+        this.type = type;
     }
 
     public String getEmail() {
@@ -32,12 +34,21 @@ public class loginPage {
     }
 
     public void setPassword(String password) {
-        Password = password;
+        this.Password = password;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String toString(){
         return "login details :- /n"+
                 "Email : "+email+"/n"+
-                "Password : "+Password+"/n";
+                "Password : "+Password+"/n"+
+                "type : "+type+"/n";
     }
 }
